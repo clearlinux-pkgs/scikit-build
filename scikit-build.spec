@@ -4,7 +4,7 @@
 #
 Name     : scikit-build
 Version  : 0.6.1
-Release  : 2
+Release  : 3
 URL      : https://github.com/scikit-build/scikit-build/releases/download/0.6.1/scikit-build-0.6.1.tar.gz
 Source0  : https://github.com/scikit-build/scikit-build/releases/download/0.6.1/scikit-build-0.6.1.tar.gz
 Summary  : Improved build system generator for Python C extensions
@@ -56,12 +56,12 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1505061239
+export SOURCE_DATE_EPOCH=1505366001
 python2 setup.py build -b py2
 python3 setup.py build -b py3
 
 %install
-export SOURCE_DATE_EPOCH=1505061239
+export SOURCE_DATE_EPOCH=1505366001
 rm -rf %{buildroot}
 python2 -tt setup.py build -b py2 install --root=%{buildroot} --force
 python3 -tt setup.py build -b py3 install --root=%{buildroot} --force

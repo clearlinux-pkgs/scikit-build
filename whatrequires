@@ -1,3 +1,11 @@
 # This file contains recursive sources that require this package
-meson-0:0.42.0-4.src
-ninja-0:1.7.2-2.src
+at-spi2-atk
+gnome-bluetooth
+gnome-calendar
+gnome-shell
+gnome-terminal
+gnome-tweak-tool
+json-glib
+meson
+nautilus
+ninja
