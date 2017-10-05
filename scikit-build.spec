@@ -4,13 +4,14 @@
 #
 Name     : scikit-build
 Version  : 0.6.1
-Release  : 3
+Release  : 4
 URL      : https://github.com/scikit-build/scikit-build/releases/download/0.6.1/scikit-build-0.6.1.tar.gz
 Source0  : https://github.com/scikit-build/scikit-build/releases/download/0.6.1/scikit-build-0.6.1.tar.gz
 Summary  : Improved build system generator for Python C extensions
 Group    : Development/Tools
 License  : MIT NCSA
 Requires: scikit-build-legacypython
+Requires: scikit-build-python3
 Requires: scikit-build-python
 Requires: setuptools
 Requires: wheel
@@ -34,6 +35,7 @@ scikit-build
 %package legacypython
 Summary: legacypython components for the scikit-build package.
 Group: Default
+Requires: python-core
 
 %description legacypython
 legacypython components for the scikit-build package.
@@ -43,9 +45,19 @@ legacypython components for the scikit-build package.
 Summary: python components for the scikit-build package.
 Group: Default
 Requires: scikit-build-legacypython
+Requires: scikit-build-python3
 
 %description python
 python components for the scikit-build package.
+
+
+%package python3
+Summary: python3 components for the scikit-build package.
+Group: Default
+Requires: python3-core
+
+%description python3
+python3 components for the scikit-build package.
 
 
 %prep
@@ -56,12 +68,12 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1505366001
+export SOURCE_DATE_EPOCH=1507171397
 python2 setup.py build -b py2
 python3 setup.py build -b py3
 
 %install
-export SOURCE_DATE_EPOCH=1505366001
+export SOURCE_DATE_EPOCH=1507171397
 rm -rf %{buildroot}
 python2 -tt setup.py build -b py2 install --root=%{buildroot} --force
 python3 -tt setup.py build -b py3 install --root=%{buildroot} --force
@@ -77,5 +89,8 @@ echo ----[ mark ]----
 /usr/lib/python2*/*
 
 %files python
+%defattr(-,root,root,-)
+
+%files python3
 %defattr(-,root,root,-)
 /usr/lib/python3*/*
