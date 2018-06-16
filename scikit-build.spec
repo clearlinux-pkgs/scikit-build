@@ -6,7 +6,7 @@
 #
 Name     : scikit-build
 Version  : 0.6.1
-Release  : 12
+Release  : 13
 URL      : https://github.com/scikit-build/scikit-build/releases/download/0.6.1/scikit-build-0.6.1.tar.gz
 Source0  : https://github.com/scikit-build/scikit-build/releases/download/0.6.1/scikit-build-0.6.1.tar.gz
 Source99 : https://github.com/scikit-build/scikit-build/releases/download/0.6.1/scikit-build-0.6.1.tar.gz.asc
@@ -14,13 +14,13 @@ Summary  : Improved build system generator for Python C extensions
 Group    : Development/Tools
 License  : MIT NCSA
 Requires: scikit-build-python3
+Requires: scikit-build-license
 Requires: scikit-build-python
 Requires: setuptools
 Requires: wheel
 BuildRequires : cmake
 BuildRequires : pbr
 BuildRequires : pip
-
 BuildRequires : python3-dev
 BuildRequires : setuptools
 
@@ -34,13 +34,12 @@ scikit-build
         compilation, and locating dependencies and determining their build
         requirements. The **scikit-build** package is fundamentally just glue between
 
-%package legacypython
-Summary: legacypython components for the scikit-build package.
+%package license
+Summary: license components for the scikit-build package.
 Group: Default
-Requires: python-core
 
-%description legacypython
-legacypython components for the scikit-build package.
+%description license
+license components for the scikit-build package.
 
 
 %package python
@@ -69,15 +68,14 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1519360155
-python2 setup.py build -b py2
+export SOURCE_DATE_EPOCH=1529114467
 python3 setup.py build -b py3
 
 %install
-export SOURCE_DATE_EPOCH=1519360155
 rm -rf %{buildroot}
-python2 -tt setup.py build -b py2 install --root=%{buildroot} --force
-python3 -tt setup.py build -b py3 install --root=%{buildroot} --force
+mkdir -p %{buildroot}/usr/share/doc/scikit-build
+cp LICENSE %{buildroot}/usr/share/doc/scikit-build/LICENSE
+python3 -tt setup.py build -b py3 install --root=%{buildroot}
 echo ----[ mark ]----
 cat %{buildroot}/usr/lib/python3*/site-packages/*/requires.txt || :
 echo ----[ mark ]----
@@ -85,9 +83,9 @@ echo ----[ mark ]----
 %files
 %defattr(-,root,root,-)
 
-%files legacypython
+%files license
 %defattr(-,root,root,-)
-/usr/lib/python2*/*
+/usr/share/doc/scikit-build/LICENSE
 
 %files python
 %defattr(-,root,root,-)
