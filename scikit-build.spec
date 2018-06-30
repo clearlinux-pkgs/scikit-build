@@ -6,7 +6,7 @@
 #
 Name     : scikit-build
 Version  : 0.6.1
-Release  : 14
+Release  : 15
 URL      : https://github.com/scikit-build/scikit-build/releases/download/0.6.1/scikit-build-0.6.1.tar.gz
 Source0  : https://github.com/scikit-build/scikit-build/releases/download/0.6.1/scikit-build-0.6.1.tar.gz
 Source99 : https://github.com/scikit-build/scikit-build/releases/download/0.6.1/scikit-build-0.6.1.tar.gz.asc
