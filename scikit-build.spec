@@ -4,7 +4,7 @@
 #
 Name     : scikit-build
 Version  : 0.9.0
-Release  : 21
+Release  : 22
 URL      : https://github.com/scikit-build/scikit-build/archive/0.9.0.tar.gz
 Source0  : https://github.com/scikit-build/scikit-build/archive/0.9.0.tar.gz
 Summary  : No detailed summary available
