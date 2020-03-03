@@ -4,10 +4,10 @@
 #
 Name     : scikit-build
 Version  : 0.10.0
-Release  : 26
+Release  : 27
 URL      : https://github.com/scikit-build/scikit-build/archive/0.10.0/scikit-build-0.10.0.tar.gz
 Source0  : https://github.com/scikit-build/scikit-build/archive/0.10.0/scikit-build-0.10.0.tar.gz
-Summary  : No detailed summary available
+Summary  : Improved build system generator for Python C/C++/Fortran/Cython extensions
 Group    : Development/Tools
 License  : NCSA
 Requires: scikit-build-license = %{version}-%{release}
@@ -28,8 +28,84 @@ BuildRequires : virtualenv
 BuildRequires : wheel
 
 %description
-This folder contains files the define CMake's defaults for given platforms.  Any of them can be overridden by either
-command line or by environment variables.
+===============================
+scikit-build
+===============================
+
+Improved build system generator for CPython C/C++/Fortran/Cython extensions.
+
+Better support is available for additional compilers, build systems, cross
+compilation, and locating dependencies and determining their build
+requirements.
+
+The **scikit-build** package is fundamentally just glue between
+the `setuptools` Python module and `CMake <https://cmake.org/>`_.
+
+To get started, see `this example <https://scikit-build.readthedocs.io/en/latest/usage.html#example-of-setup-py-cmakelists-txt-and-pyproject-toml>`_.
+
+
+Latest Release
+--------------
+
+.. table::
+
+  +-----------------------------------------------------------------------------+-------------------------------------------------------------------------------+
+  | Versions                                                                    | Downloads                                                                     |
+  +=============================================================================+===============================================================================+
+  | .. image:: https://img.shields.io/pypi/v/scikit-build.svg                   | .. image:: https://img.shields.io/badge/downloads-130k%20total-green.svg      |
+  |     :target: https://pypi.python.org/pypi/scikit-build                      |     :target: https://pypi.python.org/pypi/scikit-build                        |
+  +-----------------------------------------------------------------------------+-------------------------------------------------------------------------------+
+  | .. image:: https://anaconda.org/conda-forge/scikit-build/badges/version.svg | .. image:: https://anaconda.org/conda-forge/scikit-build/badges/downloads.svg |
+  |     :target: https://anaconda.org/conda-forge/scikit-build                  |     :target: https://anaconda.org/conda-forge/scikit-build                    |
+  +-----------------------------------------------------------------------------+-------------------------------------------------------------------------------+
+
+
+Build Status
+------------
+
+.. table::
+
+  +---------------+-----------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------+
+  |               | Linux                                                                                   | MacOSX                                                                                  | Windows                                                                                                   |
+  +===============+=========================================================================================+=========================================================================================+===========================================================================================================+
+  | PyPI          | .. image:: https://circleci.com/gh/scikit-build/scikit-build.svg?style=shield           | .. image:: https://img.shields.io/travis/scikit-build/scikit-build.svg?maxAge=2592000   | .. image:: https://ci.appveyor.com/api/projects/status/77bjtsihsjaywjr0?svg=true                          |
+  |               |     :target: https://circleci.com/gh/scikit-build/scikit-build                          |     :target: https://travis-ci.org/scikit-build/scikit-build                            |    :target: https://ci.appveyor.com/project/scikit-build/scikit-build/branch/master                       |
+  +---------------+-----------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------+
+  | Conda         | .. image:: https://circleci.com/gh/conda-forge/scikit-build-feedstock.svg?style=shield  | .. image:: https://travis-ci.org/conda-forge/scikit-build-feedstock.svg?branch=master   | .. image:: https://ci.appveyor.com/api/projects/status/github/conda-forge/scikit-build-feedstock?svg=True |
+  |               |     :target: https://circleci.com/gh/conda-forge/scikit-build-feedstock                 |     :target: https://travis-ci.org/conda-forge/scikit-build-feedstock                   |    :target: https://ci.appveyor.com/project/conda-forge/scikit-build-feedstock/branch/master              |
+  +---------------+-----------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------+
+
+Overall Health
+--------------
+
+.. image:: https://requires.io/github/scikit-build/scikit-build/requirements.svg?branch=master
+    :target: https://requires.io/github/scikit-build/scikit-build/requirements/?branch=master
+    :alt: Requirements Status
+
+.. image:: https://codecov.io/gh/scikit-build/scikit-build/branch/master/graph/badge.svg
+    :target: https://codecov.io/gh/scikit-build/scikit-build
+
+.. image:: https://landscape.io/github/scikit-build/scikit-build/master/landscape.svg?style=flat
+    :target: https://landscape.io/github/scikit-build/scikit-build
+    :alt: Code Health
+
+Miscellaneous
+-------------
+
+* Free software: MIT license
+* Documentation: http://scikit-build.readthedocs.org
+* Source code: https://github.com/scikit-build/scikit-build
+* Mailing list: https://groups.google.com/forum/#!forum/scikit-build
+
+
+
+
+History
+-------
+
+PyCMake was created at SciPy 2014 in response to general difficulties building
+C++ and Fortran based Python extensions across platforms.  It was renamed to
+"scikit-build" in 2016.
 
 %package license
 Summary: license components for the scikit-build package.
@@ -52,6 +128,7 @@ python components for the scikit-build package.
 Summary: python3 components for the scikit-build package.
 Group: Default
 Requires: python3-core
+Provides: pypi(scikit-build)
 
 %description python3
 python3 components for the scikit-build package.
@@ -59,13 +136,16 @@ python3 components for the scikit-build package.
 
 %prep
 %setup -q -n scikit-build-0.10.0
+cd %{_builddir}/scikit-build-0.10.0
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-export LANG=C
-export SOURCE_DATE_EPOCH=1558939416
+export LANG=C.UTF-8
+export SOURCE_DATE_EPOCH=1583223061
+# -Werror is for werrorists
+export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
@@ -80,7 +160,7 @@ python3 setup.py build
 export MAKEFLAGS=%{?_smp_mflags}
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/scikit-build
-cp LICENSE %{buildroot}/usr/share/package-licenses/scikit-build/LICENSE
+cp %{_builddir}/scikit-build-0.10.0/LICENSE %{buildroot}/usr/share/package-licenses/scikit-build/48d9b98c9f043b5a42399020beaac0aa6afbc4b3
 python3 -tt setup.py build  install --root=%{buildroot}
 echo ----[ mark ]----
 cat %{buildroot}/usr/lib/python3*/site-packages/*/requires.txt || :
@@ -91,7 +171,7 @@ echo ----[ mark ]----
 
 %files license
 %defattr(0644,root,root,0755)
-/usr/share/package-licenses/scikit-build/LICENSE
+/usr/share/package-licenses/scikit-build/48d9b98c9f043b5a42399020beaac0aa6afbc4b3
 
 %files python
 %defattr(-,root,root,-)
