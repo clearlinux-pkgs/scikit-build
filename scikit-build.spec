@@ -4,7 +4,7 @@
 #
 Name     : scikit-build
 Version  : 0.11.1
-Release  : 30
+Release  : 31
 URL      : https://github.com/scikit-build/scikit-build/archive/0.11.1/scikit-build-0.11.1.tar.gz
 Source0  : https://github.com/scikit-build/scikit-build/archive/0.11.1/scikit-build-0.11.1.tar.gz
 Summary  : Improved build system generator for Python C/C++/Fortran/Cython extensions
